@@ -1,26 +1,31 @@
 <template>
   
   <div>
-    <h1>Abstract</h1>
-    <el-row>
-    <el-button>默认按钮</el-button>
-    <el-button type="primary">主要按钮</el-button>
-    <el-button type="success">成功按钮</el-button>
-    <el-button type="info">信息按钮</el-button>
-    <el-button type="warning">警告按钮</el-button>
-    <el-button type="danger">危险按钮</el-button>
-  </el-row>
+   <el-row>
+      <HelloWorld msg = "Welcome"/>
+      <form action="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes">
+        <el-button type="primary" >主要按钮</el-button>
+      </form>
+      <el-button  >默认按钮</el-button>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes">click here</a>
+      
+      <el-button type="success">成功按钮</el-button>
+      <el-button type="info">信息按钮</el-button>
+      <el-button type="warning">警告按钮</el-button>
+      <el-button type="danger">危险按钮</el-button>
+    
+    </el-row>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-//import HelloWorld from '@/components/HelloWorld.vue'
+import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
   name: 'Home',
-  // components: {
-  //   HelloWorld
-  // }
+   components: {
+     HelloWorld
+   }
 }
 </script>
