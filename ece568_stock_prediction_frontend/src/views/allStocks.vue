@@ -1,6 +1,20 @@
 <template>
   <div>
     <el-row>
+      <el-col :span="8" :offset="8">
+        <h1>ECE568 Stock Prediction</h1>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-date-picker
+        v-model="value1"
+        type="date"
+        placeholder="Pick a day"
+        :picker-options="pickerOptions"
+      ></el-date-picker>
+    </el-row>
+    <br />
+    <el-row>
       <el-col
         xs="10"
         :sm="8"
@@ -89,6 +103,12 @@
 export default {
   data() {
     return {
+      pickerOptions: {
+          disabledDate(time) {
+            return time.getTime() > Date.now();
+          },
+      }, 
+      value1: "",
       passingParam: "default company",
       currentDate: new Date()
         .toJSON()
@@ -112,7 +132,8 @@ export default {
           closing_price: 452,
           predict_price: 430,
           recommend: "Buy",
-          src: "https://wrongfuldeathsouthflorida.com/wp-content/uploads/2019/05/tesla_logo.jpg"
+          src:
+            "https://wrongfuldeathsouthflorida.com/wp-content/uploads/2019/05/tesla_logo.jpg"
         },
         {
           name: "Insmed",
@@ -121,8 +142,7 @@ export default {
           closing_price: 452,
           predict_price: 430,
           recommend: "Buy",
-          src: 
-          "https://insmed.com/wp-content/uploads/2019/11/insmed_logo.jpg"
+          src: "https://insmed.com/wp-content/uploads/2019/11/insmed_logo.jpg"
         },
         {
           name: "Lakeland",
@@ -200,18 +220,17 @@ export default {
 
   created: function() {
     this.$axios
-        .get('/recommendation', {
-          params: {
-            date: '1578330732000'
-          }
-        })
-        .then(res => {
-          console.log("get data from backend");
-          // this.videos = res.data;
-          this.companyData = res.data;
-        });
-
-  }, 
+      .get("/recommendation", {
+        params: {
+          date: "1578330732000"
+        }
+      })
+      .then(res => {
+        console.log("get data from backend");
+        // this.videos = res.data;
+        this.companyData = res.data;
+      });
+  },
 
   methods: {
     getImgUrl(pic) {

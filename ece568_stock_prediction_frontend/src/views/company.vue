@@ -1,21 +1,20 @@
 <template>
   <div>
+    <el-page-header @back="goBack" title="homepage" :content=this.company></el-page-header>
     <h1>{{company}}</h1>
-    <h4>Prediction: {{predict_price}}; Closing price: {{closing_price}}</h4>                  
-                <h3>Recommendation: {{recommend}}</h3>
-    
+    <h4>Prediction: {{predict_price}}; Closing price: {{closing_price}}</h4>
+    <h3>Recommendation: {{recommend}}</h3>
+
     <el-row type="flex" class="row-bg" justify="center" gutter="20">
       <el-col span="15">
         <el-card body-style="{ padding: '30px' }">
           <el-row>
             <h3>Stock Candle Chart</h3>
             <ve-candle :data="chartData" :settings="chartSettings"></ve-candle>
-            
           </el-row>
           <el-row>
-           <h3>True price and prediction comparison</h3>
+            <h3>True price and prediction comparison</h3>
             <ve-line :data="chartData2" :settings="chartSettings2"></ve-line>
-            
           </el-row>
         </el-card>
       </el-col>
@@ -27,12 +26,11 @@
 // @ is an alias to /src
 //import HelloWorld from '@/components/HelloWorld.vue'
 
-
 export default {
   data() {
     this.chartSettings2 = {
-      metrics: ['predictPrice', 'closePrice'],
-      dimension: ['date']
+      metrics: ["predictPrice", "closePrice"],
+      dimension: ["date"]
     };
     this.chartSettings = {
       showMA: true,
@@ -46,25 +44,48 @@ export default {
       showDataZoom: true
     };
     return {
-      company: "defult company", 
-      index: -1, 
-      accuracy_percentage: -1, 
-      closing_price: -1, 
-      recommend: "Default action", 
+      company: "defult company",
+      index: -1,
+      accuracy_percentage: -1,
+      closing_price: -1,
+      recommend: "Default action",
       src: "",
-      predict_price:-1,
+      predict_price: -1,
       chartData2: {
-       
-        columns: ['date', 'predictPrice', 'closePrice', 'precision'],
+        columns: ["date", "predictPrice", "closePrice", "precision"],
         rows: [
-          { 'date': '1/1', 'predictPrice': 1393, 'closePrice': 1093, 'precision': 0.32 },
-          { 'date': '1/2', 'predictPrice': 3530, 'closePrice': 3230, 'precision': 0.26 },
-          { 'date': '1/3', 'predictPrice': 2923, 'closePrice': 2623, 'precision': 0.76 },
-          { 'date': '1/4', 'predictPrice': 1723, 'closePrice': 1423, 'precision': 0.49 },
-          { 'date': '1/5', 'predictPrice': 3792, 'closePrice': 3492, 'precision': 0.323 },
-          { 'date': '1/6', 'predictPrice': 4593, 'closePrice': 4293, 'precision': 0.78 }
+          {
+            date: "1/1",
+            predictPrice: 1393,
+            closePrice: 1093,
+            precision: 0.32
+          },
+          {
+            date: "1/2",
+            predictPrice: 3530,
+            closePrice: 3230,
+            precision: 0.26
+          },
+          {
+            date: "1/3",
+            predictPrice: 2923,
+            closePrice: 2623,
+            precision: 0.76
+          },
+          {
+            date: "1/4",
+            predictPrice: 1723,
+            closePrice: 1423,
+            precision: 0.49
+          },
+          {
+            date: "1/5",
+            predictPrice: 3792,
+            closePrice: 3492,
+            precision: 0.323
+          },
+          { date: "1/6", predictPrice: 4593, closePrice: 4293, precision: 0.78 }
         ]
-      
       },
       chartData: {
         columns: ["date", "open", "close", "lowest", "highest", "vol"],
@@ -378,7 +399,11 @@ export default {
     };
   },
   methods: {
-
+    goBack() {
+      this.$router.push({
+        path: '/'
+      });
+    }, 
   },
   created() {
     this.company = this.$route.params.c;
@@ -386,20 +411,18 @@ export default {
     this.accuracy_percentage = this.$route.params.a;
     this.closing_price = this.$route.params.p;
     this.recommend = this.$route.params.r;
-    this.src=this.$route.params.src,
-    this.predict_price=this.$route.params.predict_price
+    (this.src = this.$route.params.src),
+      (this.predict_price = this.$route.params.predict_price);
     this.$axios
-        .get('/graphdata', {
-          params: {
-            companyIdx: this.index,
-          }
-        })
-        .then(res => {
-          console.log("get graph data from backend");
-          this.chartData.rows = res.data;
-        });
-
+      .get("/graphdata", {
+        params: {
+          companyIdx: this.index
+        }
+      })
+      .then(res => {
+        console.log("get graph data from backend");
+        this.chartData.rows = res.data;
+      });
   }
-
 };
 </script>
