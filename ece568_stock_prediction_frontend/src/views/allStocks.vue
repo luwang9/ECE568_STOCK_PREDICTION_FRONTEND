@@ -11,7 +11,7 @@
             <div style="padding: 14px;">
               <span>Google</span>
               <div class="bottom clearfix">
-                <h2>Prediction: {{recommend_google}}</h2>
+                <h2>Prediction: {{data[0].name}}</h2>
                 <div style="padding: 10px">
                   <time class="time progress">{{ currentDate }}</time>
                 </div>
@@ -19,11 +19,11 @@
                 <el-progress
                   :text-inside="true"
                   :stroke-width="20"
-                  :percentage="percentage_google"
+                  :percentage="data[0].percentage"
                   :color="customColorMethod"
                   class="progress clearfix"
                 ></el-progress>
-                <el-button type="text" class="button" @click="changePage">More info</el-button>
+                <el-button type="text" class="button" @click="changePage(Google)">More info</el-button>
               </div>
             </div>
           </el-card>
@@ -49,7 +49,7 @@
                   :color="customColorMethod"
                   class="progress clearfix"
                 ></el-progress>
-                <el-button type="text" class="button" @click="changePage">More info</el-button>
+                <el-button type="text" class="button" @click="changePage(Tesla)">More info</el-button>
               </div>
             </div>
           </el-card>
@@ -100,7 +100,7 @@
                   :color="customColorMethod"
                   class="progress clearfix"
                 ></el-progress>
-                <el-button type="text" class="button" @click="changePage">More info</el-button>
+                <el-button type="text" class="button" @click="changePage(google)">More info</el-button>
               </div>
             </div>
           </el-card>
@@ -317,7 +317,11 @@ export default {
         .slice(0, 10)
         .replace(/-/g, "/"),
       // percentage_ refers to prediction accuracy and recommend_ refers to stock prediction
-      percentage_google: 10,
+        data:[
+            {name: "Google",index: "GOOGL", accuracy_percentage:19,closing_price:452,recommend:"cwadcse"},
+            {name: "googlee",percentage:19,price:452,title:"cwadcse"}
+        ],
+      percentage_google: 1,
       recommend_google: 234,
       percentage_tesla: 30,
       recommend_tesla: 452,
@@ -349,9 +353,13 @@ export default {
         return "#67c23a";
       }
     },
-    changePage() {
+    changePage(name) {
       // how to redirect to more info page
-      console.log("sda");
+      console.log(name);
+      this.$router.push({
+        path: '/company',
+        name:name,
+      });
     }
   }
 };

@@ -32,7 +32,6 @@
 //import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
-  company: "Google",
   data() {
     this.chartSettings2 = {
       metrics: ['访问用户', '下单用户'],
@@ -50,7 +49,6 @@ export default {
       showDataZoom: true
     };
     return {
-      company: "Google",
       chartData2: {
        
         columns: ['日期', '访问用户', '下单用户', '下单率'],
@@ -380,6 +378,10 @@ export default {
       console.log("call changeCompany");
       this.company = "Yahoo";
     }
+  },
+  created() {
+    this.company = this.$route.name;
   }
+
 };
 </script>
