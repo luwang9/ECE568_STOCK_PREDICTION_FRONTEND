@@ -1,25 +1,21 @@
 <template>
   <div>
     <h1>{{company}}</h1>
-    <!-- <el-button @click="changeCompany" type="primary">主要按钮</el-button> -->
-    <el-row>
-      <!-- <el-button href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes">默认按钮</el-button> -->
-      <!-- <el-link type="info" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes">
-        信息链接
-        <i class="el-icon-search"></i>
-      </el-link> -->
-    </el-row>
+    <h4>Prediction: {{predict_price}}; Closing price: {{closing_price}}</h4>                  
+                <h3>Recommendation: {{recommend}}</h3>
+    
     <el-row type="flex" class="row-bg" justify="center" gutter="20">
       <el-col span="15">
         <el-card body-style="{ padding: '30px' }">
           <el-row>
-            <ve-candle :data="chartData" :settings="chartSettings"></ve-candle>
             <h3>Stock Candle Chart</h3>
+            <ve-candle :data="chartData" :settings="chartSettings"></ve-candle>
+            
           </el-row>
           <el-row>
-           
+           <h3>True price and prediction comparison</h3>
             <ve-line :data="chartData2" :settings="chartSettings2"></ve-line>
-            <h3>True price and prediction comparison</h3>
+            
           </el-row>
         </el-card>
       </el-col>
@@ -30,6 +26,7 @@
 <script>
 // @ is an alias to /src
 //import HelloWorld from '@/components/HelloWorld.vue'
+
 
 export default {
   data() {
@@ -49,6 +46,13 @@ export default {
       showDataZoom: true
     };
     return {
+      company: "defult company", 
+      index: -1, 
+      accuracy_percentage: -1, 
+      closing_price: -1, 
+      recommend: "Default action", 
+      src: "",
+      predict_price:-1,
       chartData2: {
        
         columns: ['日期', '访问用户', '下单用户', '下单率'],
@@ -374,13 +378,15 @@ export default {
     };
   },
   methods: {
-    changeCompany() {
-      console.log("call changeCompany");
-      this.company = "Yahoo";
-    }
   },
   created() {
-    this.company = this.$route.name;
+    this.company = this.$route.params.c;
+    this.index = this.$route.params.i;
+    this.accuracy_percentage = this.$route.params.a;
+    this.closing_price = this.$route.params.p;
+    this.recommend = this.$route.params.r;
+    this.src=this.$route.params.src,
+    this.predict_price=this.$route.params.predict_price
   }
 
 };

@@ -1,268 +1,39 @@
 <template>
   <div>
-    <el-row type="flex" class="row-bg" justify="center" gutter="20">
-      <el-col :span="7">
+    <el-row>
+      <el-col
+        xs="10"
+        :sm="8"
+        :md="7"
+        :lg="6"
+        :xl="6"
+        v-for="(project,index) in companyData"
+        :key="index"
+        :offset="1"
+        class="colstyle"
+      >
         <div style="padding:3px">
           <el-card :body-style="{ padding: '30px' }">
-            <img
-              src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"
-              class="image"
-            />
+            <img :src="getImgUrl(index)" v-bind:alt="pic" class="image" />
             <div style="padding: 14px;">
-              <span>Google</span>
+              <span>{{project.name}}</span>
               <div class="bottom clearfix">
-                <h2>Prediction: {{data[0].name}}</h2>
-                <div style="padding: 10px">
-                  <time class="time progress">{{ currentDate }}</time>
-                </div>
+                <h4>Prediction: {{project.predict_price}}</h4>
+                <h4>Closing price: {{project.closing_price}}</h4>
+
+                <h3>Recommendation: {{project.recommend}}</h3>
 
                 <el-progress
                   :text-inside="true"
                   :stroke-width="20"
-                  :percentage="data[0].percentage"
+                  :percentage="project.accuracy_percentage"
                   :color="customColorMethod"
                   class="progress clearfix"
                 ></el-progress>
-                <el-button type="text" class="button" @click="changePage(Google)">More info</el-button>
-              </div>
-            </div>
-          </el-card>
-        </div>
-        <div style="padding:3px">
-          <el-card :body-style="{ padding: '30px' }">
-            <img
-              src="https://wrongfuldeathsouthflorida.com/wp-content/uploads/2019/05/tesla_logo.jpg"
-              class="image"
-            />
-            <div style="padding: 14px;">
-              <span>Tesla</span>
-              <div class="bottom clearfix">
-                <h2>Prediction: {{recommend_tesla}}</h2>
-                <div style="padding: 10px">
+                <div style="padding: 5px">
                   <time class="time progress">{{ currentDate }}</time>
                 </div>
-
-                <el-progress
-                  :text-inside="true"
-                  :stroke-width="20"
-                  :percentage="percentage_tesla"
-                  :color="customColorMethod"
-                  class="progress clearfix"
-                ></el-progress>
-                <el-button type="text" class="button" @click="changePage(Tesla)">More info</el-button>
-              </div>
-            </div>
-          </el-card>
-        </div>
-        <div style="padding:3px">
-          <el-card :body-style="{ padding: '30px' }">
-            <img src="https://insmed.com/wp-content/uploads/2019/11/insmed_logo.jpg" class="image" />
-            <div style="padding: 14px;">
-              <span>Insmed</span>
-              <div class="bottom clearfix">
-                <h2>Prediction: {{recommend_insm}}</h2>
-                <div style="padding: 10px">
-                  <time class="time progress">{{ currentDate }}</time>
-                </div>
-
-                <el-progress
-                  :text-inside="true"
-                  :stroke-width="20"
-                  :percentage="percentage_insm"
-                  :color="customColorMethod"
-                  class="progress clearfix"
-                ></el-progress>
-                <el-button type="text" class="button" @click="changePage">More info</el-button>
-              </div>
-            </div>
-          </el-card>
-        </div>
-      </el-col>
-      <el-col :span="7">
-        <div style="padding:3px">
-          <el-card :body-style="{ padding: '30px' }">
-            <img
-              src="https://www.marketbeat.com/logos/lakeland-industries-inc-logo.jpg"
-              class="image"
-            />
-            <div style="padding: 14px;">
-              <span>Lakeland</span>
-              <div class="bottom clearfix">
-                <h2>Prediction: {{recommend_lake}}</h2>
-                <div style="padding: 10px">
-                  <time class="time progress">{{ currentDate }}</time>
-                </div>
-
-                <el-progress
-                  :text-inside="true"
-                  :stroke-width="20"
-                  :percentage="percentage_lake"
-                  :color="customColorMethod"
-                  class="progress clearfix"
-                ></el-progress>
-                <el-button type="text" class="button" @click="changePage(google)">More info</el-button>
-              </div>
-            </div>
-          </el-card>
-        </div>
-        <div style="padding:3px">
-          <el-card :body-style="{ padding: '30px' }">
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTJbSlw2qgyr4ERsB3ExvudU3XNx5_RlmhLCq0902Tdqgnn0sMA&usqp=CAU"
-              class="image"
-            />
-            <div style="padding: 14px;">
-              <span>Amazon</span>
-              <div class="bottom clearfix">
-                <h2>Prediction: {{recommend_amzn}}</h2>
-                <div style="padding: 10px">
-                  <time class="time progress">{{ currentDate }}</time>
-                </div>
-
-                <el-progress
-                  :text-inside="true"
-                  :stroke-width="20"
-                  :percentage="percentage_amzn"
-                  :color="customColorMethod"
-                  class="progress clearfix"
-                ></el-progress>
-                <el-button type="text" class="button" @click="changePage">More info</el-button>
-              </div>
-            </div>
-          </el-card>
-        </div>
-        <div style="padding:3px">
-          <el-card :body-style="{ padding: '30px' }">
-            <img
-              src="https://docs.alibabagroup.com/assets2/images/en/news/library_logos_alibabaev_large.png"
-              class="image"
-            />
-            <div style="padding: 14px;">
-              <span>Alibaba</span>
-              <div class="bottom clearfix">
-                <h2>Prediction: {{recommend_baba}}</h2>
-                <div style="padding: 10px">
-                  <time class="time progress">{{ currentDate }}</time>
-                </div>
-
-                <el-progress
-                  :text-inside="true"
-                  :stroke-width="20"
-                  :percentage="percentage_baba"
-                  :color="customColorMethod"
-                  class="progress clearfix"
-                ></el-progress>
-                <el-button type="text" class="button" @click="changePage">More info</el-button>
-              </div>
-            </div>
-          </el-card>
-        </div>
-      </el-col>
-      <el-col :span="7">
-        <div style="padding:3px">
-          <el-card :body-style="{ padding: '30px' }">
-            <img
-              src="https://cdn0.tnwcdn.com/wp-content/blogs.dir/1/files/2015/07/sdffdsafsdf-1200x604.png"
-              class="image"
-            />
-            <div style="padding: 14px;">
-              <span>Facebook</span>
-              <div class="bottom clearfix">
-                <h2>Prediction: {{recommend_fb}}</h2>
-                <div style="padding: 10px">
-                  <time class="time progress">{{ currentDate }}</time>
-                </div>
-
-                <el-progress
-                  :text-inside="true"
-                  :stroke-width="20"
-                  :percentage="percentage_fb"
-                  :color="customColorMethod"
-                  class="progress clearfix"
-                ></el-progress>
-                <el-button type="text" class="button" @click="changePage">More info</el-button>
-              </div>
-            </div>
-          </el-card>
-        </div>
-        <div style="padding:3px">
-          <el-card :body-style="{ padding: '30px' }">
-            <img
-              src="https://www.apple.com/ac/structured-data/images/knowledge_graph_logo.png?201609051049"
-              class="image"
-            />
-            <div style="padding: 14px;">
-              <span>Apple</span>
-              <div class="bottom clearfix">
-                <h2>Prediction: {{recommend_aapl}}</h2>
-                <div style="padding: 10px">
-                  <time class="time progress">{{ currentDate }}</time>
-                </div>
-
-                <el-progress
-                  :text-inside="true"
-                  :stroke-width="20"
-                  :percentage="percentage_aapl"
-                  :color="customColorMethod"
-                  class="progress clearfix"
-                ></el-progress>
-                <el-button type="text" class="button" @click="changePage">More info</el-button>
-              </div>
-            </div>
-          </el-card>
-        </div>
-        <div style="padding:3px">
-          <el-card :body-style="{ padding: '30px' }">
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/d/d6/General_Motors_logo.svg"
-              class="image"
-            />
-            <div style="padding: 14px;">
-              <span>General Motors</span>
-              <div class="bottom clearfix">
-                <h2>Prediction: {{recommend_gm}}</h2>
-                <div style="padding: 10px">
-                  <time class="time progress">{{ currentDate }}</time>
-                </div>
-
-                <el-progress
-                  :text-inside="true"
-                  :stroke-width="20"
-                  :percentage="percentage_gm"
-                  :color="customColorMethod"
-                  class="progress clearfix"
-                ></el-progress>
-                <el-button type="text" class="button" @click="changePage">More info</el-button>
-              </div>
-            </div>
-          </el-card>
-        </div>
-      </el-col>
-    </el-row>
-    <el-row type="flex" class="row-bg" justify="center" gutter="20">
-      <el-col span="7">
-        <div style="padding:3px">
-          <el-card :body-style="{ padding: '30px' }">
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Eli_Lilly_and_Company.svg/640px-Eli_Lilly_and_Company.svg.png"
-              class="image"
-            />
-            <div style="padding: 14px;">
-              <span>Eli Lilly and Company</span>
-              <div class="bottom clearfix">
-                <h2>Prediction: {{recommend_lly}}</h2>
-                <div style="padding: 10px">
-                  <time class="time progress">{{ currentDate }}</time>
-                </div>
-
-                <el-progress
-                  :text-inside="true"
-                  :stroke-width="20"
-                  :percentage="percentage_lly"
-                  :color="customColorMethod"
-                  class="progress clearfix"
-                ></el-progress>
-                <el-button type="text" class="button" @click="changePage">More info</el-button>
+                <el-button type="text" class="button" @click="changePage(index)">More info</el-button>
               </div>
             </div>
           </el-card>
@@ -275,6 +46,9 @@
 .time {
   font-size: 13px;
   color: #999;
+}
+.el-col {
+  border-radius: 4px;
 }
 
 .bottom {
@@ -296,6 +70,9 @@
   width: 80%;
   padding: 10;
 }
+.colstyle {
+  margin-bottom: 30px;
+}
 
 .clearfix:before,
 .clearfix:after {
@@ -312,38 +89,119 @@
 export default {
   data() {
     return {
+      passingParam: "default company",
       currentDate: new Date()
         .toJSON()
         .slice(0, 10)
         .replace(/-/g, "/"),
-      // percentage_ refers to prediction accuracy and recommend_ refers to stock prediction
-        data:[
-            {name: "Google",index: "GOOGL", accuracy_percentage:19,closing_price:452,recommend:"cwadcse"},
-            {name: "googlee",percentage:19,price:452,title:"cwadcse"}
-        ],
-      percentage_google: 1,
-      recommend_google: 234,
-      percentage_tesla: 30,
-      recommend_tesla: 452,
-      percentage_insm: 90,
-      recommend_insm: 58,
-      percentage_lake: 50,
-      recommend_lake: 23,
-      percentage_amzn: 60,
-      recommend_amzn: 2340,
-      percentage_fb: 10,
-      recommend_fb: 234,
-      percentage_baba: 10,
-      recommend_baba: 234,
-      percentage_aapl: 10,
-      recommend_aapl: 234,
-      percentage_gm: 10,
-      recommend_gm: 234,
-      percentage_lly: 10,
-      recommend_lly: 234
+      companyData: [
+        {
+          name: "Google",
+          index: "GOOGL",
+          accuracy_percentage: 19,
+          closing_price: 452,
+          predict_price: 430,
+          recommend: "Buy",
+          src:
+            "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"
+        },
+        {
+          name: "Tesla",
+          index: "TSLA",
+          accuracy_percentage: 19,
+          closing_price: 452,
+          predict_price: 430,
+          recommend: "Buy",
+          src:
+            "https://wrongfuldeathsouthflorida.com/wp-content/uploads/2019/05/tesla_logo.jpg"
+        },
+        {
+          name: "Insmed",
+          index: "INSM",
+          accuracy_percentage: 99,
+          closing_price: 452,
+          predict_price: 430,
+          recommend: "Buy",
+          src: "https://insmed.com/wp-content/uploads/2019/11/insmed_logo.jpg"
+        },
+        {
+          name: "Lakeland",
+          index: "LAKE",
+          accuracy_percentage: 19,
+          closing_price: 452,
+          predict_price: 430,
+          recommend: "Buy",
+          src:
+            "https://www.marketbeat.com/logos/lakeland-industries-inc-logo.jpg"
+        },
+        {
+          name: "Amazon",
+          index: "AMZN",
+          accuracy_percentage: 19,
+          closing_price: 452,
+          predict_price: 430,
+          recommend: "Buy",
+          src:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTJbSlw2qgyr4ERsB3ExvudU3XNx5_RlmhLCq0902Tdqgnn0sMA&usqp=CAU"
+        },
+        {
+          name: "Alibaba",
+          index: "BABA",
+          accuracy_percentage: 19,
+          closing_price: 452,
+          predict_price: 430,
+          recommend: "Buy",
+          src:
+            "https://docs.alibabagroup.com/assets2/images/en/news/library_logos_alibabaev_large.png"
+        },
+        {
+          name: "Facebook",
+          index: "FB",
+          accuracy_percentage: 19,
+          closing_price: 452,
+          predict_price: 430,
+          recommend: "Buy",
+          src:
+            "https://cdn0.tnwcdn.com/wp-content/blogs.dir/1/files/2015/07/sdffdsafsdf-1200x604.png"
+        },
+        {
+          name: "Apple",
+          index: "AAPL",
+          accuracy_percentage: 19,
+          closing_price: 452,
+          predict_price: 430,
+          recommend: "Buy",
+          src:
+            "https://www.apple.com/ac/structured-data/images/knowledge_graph_logo.png?201609051049"
+        },
+        {
+          name: "General Motors",
+          index: "GM",
+          accuracy_percentage: 19,
+          closing_price: 452,
+          predict_price: 430,
+          recommend: "Buy",
+          src:
+            "https://upload.wikimedia.org/wikipedia/commons/d/d6/General_Motors_logo.svg"
+        },
+        {
+          name: "Eli Lilly and Company",
+          index: "LLY",
+          accuracy_percentage: 19,
+          closing_price: 452,
+          predict_price: 430,
+          recommend: "Buy",
+          src:
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Eli_Lilly_and_Company.svg/640px-Eli_Lilly_and_Company.svg.png"
+        }
+      ]
     };
   },
+
   methods: {
+    getImgUrl(pic) {
+      return this.companyData[pic].src;
+    },
     customColorMethod(percentage) {
       if (percentage < 30) {
         return "#909399";
@@ -354,11 +212,20 @@ export default {
       }
     },
     changePage(name) {
-      // how to redirect to more info page
-      console.log(name);
+      this.passingParam = name;
+      console.log("ready to direct to company detail page");
+      console.log(this.companyData[name].name);
       this.$router.push({
-        path: '/company',
-        name:name,
+        name: "Company",
+        params: {
+          c: this.companyData[name].name,
+          i: this.companyData[name].index,
+          a: this.companyData[name].accuracy_percentage,
+          p: this.companyData[name].closing_price,
+          r: this.companyData[name].recommend,
+          src: this.companyData[name].src,
+          predict_price: this.companyData[name].predict_price
+        }
       });
     }
   }

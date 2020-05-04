@@ -1,9 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/company">Google</router-link>|
-      <router-link to="/allstocks">All stocks</router-link>
+      <router-link to="/">All stocks</router-link>
 
     </div>
     <router-view/>
