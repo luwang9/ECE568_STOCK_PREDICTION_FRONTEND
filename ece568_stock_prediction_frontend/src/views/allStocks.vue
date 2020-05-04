@@ -7,11 +7,13 @@
     </el-row>
     <el-row>
       <el-date-picker
-        v-model="value1"
+        v-model="date_input"
         type="date"
         placeholder="Pick a day"
         :picker-options="pickerOptions"
+        value-format="timestamp"
       ></el-date-picker>
+      <el-button @click="changeDate">Retrieve</el-button>
     </el-row>
     <br />
     <el-row>
@@ -108,7 +110,7 @@ export default {
             return time.getTime() > Date.now();
           },
       }, 
-      value1: "",
+      date_input: "1578330732000",
       passingParam: "default company",
       currentDate: new Date()
         .toJSON()
@@ -222,17 +224,28 @@ export default {
     this.$axios
       .get("/recommendation", {
         params: {
-          date: "1578330732000"
+          date: this.date_input
         }
       })
       .then(res => {
         console.log("get data from backend");
-        // this.videos = res.data;
         this.companyData = res.data;
       });
   },
 
   methods: {
+    changeDate() {
+      this.$axios
+      .get("/recommendation", {
+        params: {
+          date: this.date_input
+        }
+      })
+      .then(res => {
+        console.log("get data from backend after re-choose date");
+        this.companyData = res.data;
+      });
+    }, 
     getImgUrl(pic) {
       return this.companyData[pic].src;
     },
