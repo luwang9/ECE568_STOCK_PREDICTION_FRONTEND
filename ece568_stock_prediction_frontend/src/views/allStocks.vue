@@ -112,8 +112,7 @@ export default {
           closing_price: 452,
           predict_price: 430,
           recommend: "Buy",
-          src:
-            "https://wrongfuldeathsouthflorida.com/wp-content/uploads/2019/05/tesla_logo.jpg"
+          src: "https://wrongfuldeathsouthflorida.com/wp-content/uploads/2019/05/tesla_logo.jpg"
         },
         {
           name: "Insmed",
@@ -122,7 +121,8 @@ export default {
           closing_price: 452,
           predict_price: 430,
           recommend: "Buy",
-          src: "https://insmed.com/wp-content/uploads/2019/11/insmed_logo.jpg"
+          src: 
+          "https://insmed.com/wp-content/uploads/2019/11/insmed_logo.jpg"
         },
         {
           name: "Lakeland",
@@ -197,6 +197,21 @@ export default {
       ]
     };
   },
+
+  created: function() {
+    this.$axios
+        .get('/recommendation', {
+          params: {
+            date: '1578330732000'
+          }
+        })
+        .then(res => {
+          console.log("get data from backend");
+          // this.videos = res.data;
+          this.companyData = res.data;
+        });
+
+  }, 
 
   methods: {
     getImgUrl(pic) {
