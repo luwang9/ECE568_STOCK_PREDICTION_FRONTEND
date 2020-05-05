@@ -2,11 +2,12 @@
   <div>
     <el-page-header @back="goBack" title="homepage" :content=this.company></el-page-header>
     <h1>{{company}}</h1>
-    <h4>Closing price: {{closing_price}}, Predicted price: {{predict_price}}, Diff: {{(((predict_price - closing_price) / closing_price) * 100).toFixed(2)}}%</h4>
-    <h3>Recommendation: {{recommend}}</h3>
+    <h3>Closing price: {{closing_price}}, Predicted price: {{predict_price}}, Diff: {{(((predict_price - closing_price) / closing_price) * 100).toFixed(2)}}%</h3>
+    <h3>Recommendation: {{recommend}}, trading point: {{trading_point}}</h3>
 
-    <el-row type="flex" class="row-bg" justify="center" gutter="20">
-      <el-col span="15">
+    <!-- <el-row type="flex" class="row-bg" justify="center" gutter="20"> -->
+    <el-row type="flex" justify="center">
+      <el-col :span="15">
         <el-card body-style="{ padding: '30px' }">
           <el-row>
             <h3>{{company}}</h3>
@@ -46,6 +47,8 @@ export default {
       }
     }
     return {
+      date_input: '1578330732000', 
+      trading_point: '444.44', 
       company: "defult company",
       index: -1,
       accuracy_percentage: -1,
@@ -415,6 +418,7 @@ export default {
     this.recommend = this.$route.params.r;
     this.src = this.$route.params.src,
     this.predict_price = this.$route.params.predict_price;
+    this.date_input = this.$route.params.date;
     this.$axios
       .get("/graphdata", {
         params: {
@@ -435,6 +439,18 @@ export default {
         console.log("get graph data from backend");
         this.chartData2.rows = res.data;
         console.log("error_ratio: ", this.chartData2.rows[0].error_ratio);
+      });
+    this.$axios
+      .get("/tradingpoint", {
+        params: {
+          companyIdx: this.index, 
+          date: this.date_input, 
+          action: this.recommend
+        }
+      })
+      .then(res => {
+        this.trading_point = res.data;
+        console.log("get trading data from backend, data: ", this.trading_point);
       });
   }
 };
