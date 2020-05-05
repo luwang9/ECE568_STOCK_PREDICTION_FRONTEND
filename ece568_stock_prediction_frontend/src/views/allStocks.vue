@@ -38,9 +38,6 @@
                     ></el-progress>
                   </el-col>
                 </el-row>
-                <div style="padding: 5px">
-                  <time class="time progress">{{ currentDate }}</time>
-                </div>
               </div>
             </div>
           </el-card>
@@ -64,10 +61,6 @@ export default {
       }, 
       date_input: "1578330732000",
       passingParam: "default company",
-      currentDate: new Date()
-        .toJSON()
-        .slice(0, 10)
-        .replace(/-/g, "/"),
       companyData: [
         {
           name: "Google",
