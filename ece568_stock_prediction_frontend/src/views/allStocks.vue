@@ -16,31 +16,27 @@
     <br />
     <el-row>
       <el-col
-        xs="10"
-        :sm="8"
-        :md="7"
-        :lg="6"
-        :xl="6"
-        v-for="(project,index) in companyData"
+        v-for="(item,index) in companyData"
         :key="index"
         :offset="1"
         class="colstyle"
       >
         <div style="padding:3px">
           <el-card :body-style="{ padding: '30px' }">
-            <img :src="getImgUrl(index)" v-bind:alt="pic" class="image" />
+            <!-- <img :src="getImgUrl(index)" v-bind:alt="pic" class="image" /> -->
+            <img :src=item.src class="image" />
             <div style="padding: 14px;">
-              <span>{{project.name}}</span>
+              <span>{{item.name}}</span>
               <div class="bottom clearfix">
-                <h4>Prediction: {{project.predict_price}}</h4>
-                <h4>Closing price: {{project.closing_price}}</h4>
+                <h4>Prediction: {{item.predict_price}}</h4>
+                <h4>Closing price: {{item.closing_price}}</h4>
 
-                <h3>Recommendation: {{project.recommend}}</h3>
+                <h3>Recommendation: {{item.recommend}}</h3>
 
                 <el-progress
                   :text-inside="true"
                   :stroke-width="20"
-                  :percentage="project.accuracy_percentage"
+                  :percentage="item.accuracy_percentage"
                   :color="customColorMethod"
                   class="progress clearfix"
                 ></el-progress>
@@ -233,9 +229,9 @@ export default {
   },
 
   methods: {
-    getImgUrl(pic) {
-      return this.companyData[pic].src;
-    },
+    // getImgUrl(pic) {
+    //   return this.companyData[pic].src;
+    // },
     customColorMethod(percentage) {
       if (percentage < 30) {
         return "#909399";
