@@ -216,7 +216,8 @@ export default {
           p: this.companyData[name].closing_price,
           r: this.companyData[name].recommend,
           src: this.companyData[name].src,
-          predict_price: this.companyData[name].predict_price
+          predict_price: this.companyData[name].predict_price, 
+          date: this.date_input
         }
       });
     }
