@@ -24,8 +24,8 @@
             <div style="padding: 14px;">
               <span @click="changePage(index)" class="company_name">{{item.name}}</span>
               <div class="bottom clearfix">
-                <h4>Prediction: {{item.predict_price}}</h4>
                 <h4>Closing price: {{item.closing_price}}</h4>
+                <h4>Prediction price: {{item.predict_price}}</h4>
                 <h3>Recommendation: {{item.recommend}}</h3>
                 <el-row>
                   <el-col :offset=2>
