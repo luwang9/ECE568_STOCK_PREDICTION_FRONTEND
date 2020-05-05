@@ -18,7 +18,7 @@
       <el-col
         v-for="(item,index) in companyData"
         :key="index"
-        :offset="1"
+        :span="8"
         class="colstyle"
       >
         <div style="padding:3px">
