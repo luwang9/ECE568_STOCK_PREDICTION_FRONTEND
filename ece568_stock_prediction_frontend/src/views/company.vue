@@ -2,7 +2,7 @@
   <div>
     <el-page-header @back="goBack" title="homepage" :content=this.company></el-page-header>
     <h1>{{company}}</h1>
-    <h4>Closing price: {{closing_price}}, Predicted price: {{predict_price}}, Change: {{(((predict_price - closing_price) / closing_price) * 100).toFixed(2)}}%</h4>
+    <h4>Closing price: {{closing_price}}, Predicted price: {{predict_price}}, Diff: {{(((predict_price - closing_price) / closing_price) * 100).toFixed(2)}}%</h4>
     <h3>Recommendation: {{recommend}}</h3>
 
     <el-row type="flex" class="row-bg" justify="center" gutter="20">
