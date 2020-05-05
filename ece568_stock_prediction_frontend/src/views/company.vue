@@ -2,19 +2,19 @@
   <div>
     <el-page-header @back="goBack" title="homepage" :content=this.company></el-page-header>
     <h1>{{company}}</h1>
-    <h4>Prediction: {{predict_price}}; Closing price: {{closing_price}}</h4>
+    <h4>Closing price: {{closing_price}}, Predicted price: {{predict_price}}, Change: {{(((predict_price - closing_price) / closing_price) * 100).toFixed(2)}}%</h4>
     <h3>Recommendation: {{recommend}}</h3>
 
     <el-row type="flex" class="row-bg" justify="center" gutter="20">
       <el-col span="15">
         <el-card body-style="{ padding: '30px' }">
           <el-row>
-            <h3>Stock Candle Chart</h3>
+            <h3>{{company}}</h3>
             <ve-candle :data="chartData" :settings="chartSettings"></ve-candle>
           </el-row>
           <el-row>
             <h3>True price and predicted price comparison</h3>
-            <ve-line :data="chartData2"></ve-line>
+            <ve-line :data="chartData2" :settings="charSettings2"></ve-line>
           </el-row>
         </el-card>
       </el-col>
@@ -28,21 +28,23 @@
 
 export default {
   data() {
-    // this.chartSettings2 = {
-    //   metrics: ["predictPrice", "closePrice", "abs error"],
-    //   dimension: ["date"]
-    // };
     this.chartSettings = {
-      showMA: true,
       showVol: true,
-      labelMap: {
-        MA5: "ma5"
-      },
       legendName: {
-        日K: "day k"
+        日K: "Price per day"
       },
       showDataZoom: true
-    };
+    }, 
+    this.charSettings2 = {
+      axisSite: { right: ['error_ratio'] },
+      yAxisType: ['value', 'percent'],
+      yAxisName: ['price', 'error ratio'], 
+      labelMap: {
+        'predictPrice': 'Predicted price', 
+        'closePrice': 'Closing price', 
+        'error_ratio': 'Error ratio'
+      }
+    }
     return {
       company: "defult company",
       index: -1,
@@ -52,39 +54,39 @@ export default {
       src: "",
       predict_price: -1,
       chartData2: {
-        columns: ["date", "predictPrice", "closePrice", "absolute_error"],
+        columns: ["date", "predictPrice", "closePrice", "error_ratio"],
         rows: [
           {
             date: "1/1",
             predictPrice: 1393,
             closePrice: 1093,
-            absolute_error: 0.32
+            error_ratio: 0.32
           },
           {
             date: "1/2",
             predictPrice: 3530,
             closePrice: 3230,
-            absolute_error: 0.26
+            error_ratio: 0.26
           },
           {
             date: "1/3",
             predictPrice: 2923,
             closePrice: 2623,
-            absolute_error: 0.76
+            error_ratio: 0.76
           },
           {
             date: "1/4",
             predictPrice: 1723,
             closePrice: 1423,
-            absolute_error: 0.49
+            error_ratio: 0.49
           },
           {
             date: "1/5",
             predictPrice: 3792,
             closePrice: 3492,
-            absolute_error: 0.323
+            error_ratio: 0.323
           },
-          { date: "1/6", predictPrice: 4593, closePrice: 4293, absolute_error: 0.78 }
+          { date: "1/6", predictPrice: 4593, closePrice: 4293, error_ratio: 0.78 }
         ]
       },
       chartData: {
@@ -432,7 +434,7 @@ export default {
       .then(res => {
         console.log("get graph data from backend");
         this.chartData2.rows = res.data;
-        console.log("absolute_error: ", this.chartData2.rows[0].absolute_error);
+        console.log("error_ratio: ", this.chartData2.rows[0].error_ratio);
       });
   }
 };

@@ -17,39 +17,27 @@
     </el-row>
     <br />
     <el-row>
-      <el-col
-        xs="10"
-        :sm="8"
-        :md="7"
-        :lg="6"
-        :xl="6"
-        v-for="(project,index) in companyData"
-        :key="index"
-        :offset="1"
-        class="colstyle"
-      >
+      <el-col v-for="(item,index) in companyData" :key="index" :span="8" class="colstyle">
         <div style="padding:3px">
           <el-card :body-style="{ padding: '30px' }">
-            <img :src="getImgUrl(index)" v-bind:alt="pic" class="image" />
+            <img :src="item.src" class="image" @click="changePage(index)" />
             <div style="padding: 14px;">
-              <span>{{project.name}}</span>
+              <span @click="changePage(index)" class="company_name">{{item.name}}</span>
               <div class="bottom clearfix">
-                <h4>Prediction: {{project.predict_price}}</h4>
-                <h4>Closing price: {{project.closing_price}}</h4>
-
-                <h3>Recommendation: {{project.recommend}}</h3>
-
-                <el-progress
-                  :text-inside="true"
-                  :stroke-width="20"
-                  :percentage="project.accuracy_percentage"
-                  :color="customColorMethod"
-                  class="progress clearfix"
-                ></el-progress>
-                <div style="padding: 5px">
-                  <time class="time progress">{{ currentDate }}</time>
-                </div>
-                <el-button type="text" class="button" @click="changePage(index)">More info</el-button>
+                <h4>Closing price: {{item.closing_price}}</h4>
+                <h4>Prediction price: {{item.predict_price}}</h4>
+                <h3>Recommendation: {{item.recommend}}</h3>
+                <el-row>
+                  <el-col :offset=2>
+                    <el-progress
+                      :text-inside="true"
+                      :stroke-width="20"
+                      :percentage="item.accuracy_percentage"
+                      :color="customColorMethod"
+                      class="progress clearfix"
+                    ></el-progress>
+                  </el-col>
+                </el-row>
               </div>
             </div>
           </el-card>
@@ -58,48 +46,9 @@
     </el-row>
   </div>
 </template>
-<style>
-.time {
-  font-size: 13px;
-  color: #999;
-}
-.el-col {
-  border-radius: 4px;
-}
 
-.bottom {
-  margin-top: 13px;
-  line-height: 12px;
-}
 
-.button {
-  padding: 10;
-  float: right;
-}
 
-.image {
-  width: auto;
-  height: 100px;
-  display: -moz-groupbox;
-}
-.progress {
-  width: 80%;
-  padding: 10;
-}
-.colstyle {
-  margin-bottom: 30px;
-}
-
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-
-.clearfix:after {
-  clear: both;
-}
-</style>
 
 <script>
 export default {
@@ -112,10 +61,6 @@ export default {
       }, 
       date_input: "1578330732000",
       passingParam: "default company",
-      currentDate: new Date()
-        .toJSON()
-        .slice(0, 10)
-        .replace(/-/g, "/"),
       companyData: [
         {
           name: "Google",
@@ -246,9 +191,6 @@ export default {
         this.companyData = res.data;
       });
     }, 
-    getImgUrl(pic) {
-      return this.companyData[pic].src;
-    },
     customColorMethod(percentage) {
       if (percentage < 30) {
         return "#909399";
@@ -278,3 +220,54 @@ export default {
   }
 };
 </script>
+
+
+
+
+<style>
+.time {
+  font-size: 13px;
+  color: #999;
+}
+.el-col {
+  border-radius: 4px;
+}
+
+.bottom {
+  margin-top: 13px;
+  line-height: 12px;
+}
+
+.button {
+  padding: 10;
+  float: right;
+}
+
+.image {
+  width: auto;
+  height: 100px;
+  display: -moz-groupbox;
+  cursor: pointer;
+}
+.progress {
+  width: 80%;
+  padding: 10;
+}
+.colstyle {
+  margin-bottom: 30px;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.company_name {
+  cursor: pointer;
+}
+</style>
