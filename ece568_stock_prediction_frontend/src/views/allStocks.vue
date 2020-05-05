@@ -1,8 +1,8 @@
 <template>
   <div>
     <el-row>
-      <el-col :span="8" :offset="8">
-        <h1>ECE568 Stock Prediction</h1>
+      <el-col>
+        <h1 @click="reloadHomepage" class="homepageTitle">Rutgers ECE568 Online Stock Prediction</h1>
       </el-col>
     </el-row>
     <el-row>
@@ -179,6 +179,9 @@ export default {
   },
 
   methods: {
+    reloadHomepage() {
+      location.reload()
+    }, 
     changeDate() {
       this.$axios
       .get("/recommendation", {
@@ -225,6 +228,10 @@ export default {
 
 
 <style>
+.homepageTitle{
+  cursor:pointer;
+}
+
 .time {
   font-size: 13px;
   color: #999;
