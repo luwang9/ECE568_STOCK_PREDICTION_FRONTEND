@@ -23,16 +23,13 @@
       >
         <div style="padding:3px">
           <el-card :body-style="{ padding: '30px' }">
-            <!-- <img :src="getImgUrl(index)" v-bind:alt="pic" class="image" /> -->
-            <img :src=item.src class="image" />
+            <img :src=item.src class="image" @click="changePage(index)" />
             <div style="padding: 14px;">
-              <span>{{item.name}}</span>
+              <span @click="changePage(index)" class="company_name">{{item.name}}</span>
               <div class="bottom clearfix">
                 <h4>Prediction: {{item.predict_price}}</h4>
                 <h4>Closing price: {{item.closing_price}}</h4>
-
                 <h3>Recommendation: {{item.recommend}}</h3>
-
                 <el-progress
                   :text-inside="true"
                   :stroke-width="20"
@@ -43,7 +40,6 @@
                 <div style="padding: 5px">
                   <time class="time progress">{{ currentDate }}</time>
                 </div>
-                <el-button type="text" class="button" @click="changePage(index)">More info</el-button>
               </div>
             </div>
           </el-card>
@@ -52,48 +48,9 @@
     </el-row>
   </div>
 </template>
-<style>
-.time {
-  font-size: 13px;
-  color: #999;
-}
-.el-col {
-  border-radius: 4px;
-}
 
-.bottom {
-  margin-top: 13px;
-  line-height: 12px;
-}
 
-.button {
-  padding: 10;
-  float: right;
-}
 
-.image {
-  width: auto;
-  height: 100px;
-  display: -moz-groupbox;
-}
-.progress {
-  width: 80%;
-  padding: 10;
-}
-.colstyle {
-  margin-bottom: 30px;
-}
-
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-
-.clearfix:after {
-  clear: both;
-}
-</style>
 
 <script>
 export default {
@@ -261,3 +218,54 @@ export default {
   }
 };
 </script>
+
+
+
+
+<style>
+.time {
+  font-size: 13px;
+  color: #999;
+}
+.el-col {
+  border-radius: 4px;
+}
+
+.bottom {
+  margin-top: 13px;
+  line-height: 12px;
+}
+
+.button {
+  padding: 10;
+  float: right;
+}
+
+.image {
+  width: auto;
+  height: 100px;
+  display: -moz-groupbox;
+  cursor: pointer;
+}
+.progress {
+  width: 80%;
+  padding: 10;
+}
+.colstyle {
+  margin-bottom: 30px;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+.company_name {
+  cursor: pointer;
+}
+</style>
