@@ -13,8 +13,8 @@
             <ve-candle :data="chartData" :settings="chartSettings"></ve-candle>
           </el-row>
           <el-row>
-            <h3>True price and prediction comparison</h3>
-            <ve-line :data="chartData2" :settings="chartSettings2"></ve-line>
+            <h3>True price and predicted price comparison</h3>
+            <ve-line :data="chartData2"></ve-line>
           </el-row>
         </el-card>
       </el-col>
@@ -28,10 +28,10 @@
 
 export default {
   data() {
-    this.chartSettings2 = {
-      metrics: ["predictPrice", "closePrice"],
-      dimension: ["date"]
-    };
+    // this.chartSettings2 = {
+    //   metrics: ["predictPrice", "closePrice", "abs error"],
+    //   dimension: ["date"]
+    // };
     this.chartSettings = {
       showMA: true,
       showVol: true,
@@ -52,39 +52,39 @@ export default {
       src: "",
       predict_price: -1,
       chartData2: {
-        columns: ["date", "predictPrice", "closePrice", "precision"],
+        columns: ["date", "predictPrice", "closePrice", "absolute_error"],
         rows: [
           {
             date: "1/1",
             predictPrice: 1393,
             closePrice: 1093,
-            precision: 0.32
+            absolute_error: 0.32
           },
           {
             date: "1/2",
             predictPrice: 3530,
             closePrice: 3230,
-            precision: 0.26
+            absolute_error: 0.26
           },
           {
             date: "1/3",
             predictPrice: 2923,
             closePrice: 2623,
-            precision: 0.76
+            absolute_error: 0.76
           },
           {
             date: "1/4",
             predictPrice: 1723,
             closePrice: 1423,
-            precision: 0.49
+            absolute_error: 0.49
           },
           {
             date: "1/5",
             predictPrice: 3792,
             closePrice: 3492,
-            precision: 0.323
+            absolute_error: 0.323
           },
-          { date: "1/6", predictPrice: 4593, closePrice: 4293, precision: 0.78 }
+          { date: "1/6", predictPrice: 4593, closePrice: 4293, absolute_error: 0.78 }
         ]
       },
       chartData: {
@@ -411,8 +411,8 @@ export default {
     this.accuracy_percentage = this.$route.params.a;
     this.closing_price = this.$route.params.p;
     this.recommend = this.$route.params.r;
-    (this.src = this.$route.params.src),
-      (this.predict_price = this.$route.params.predict_price);
+    this.src = this.$route.params.src,
+    this.predict_price = this.$route.params.predict_price;
     this.$axios
       .get("/graphdata", {
         params: {
@@ -422,6 +422,17 @@ export default {
       .then(res => {
         console.log("get graph data from backend");
         this.chartData.rows = res.data;
+      });
+    this.$axios
+      .get("/comparedata", {
+        params: {
+          companyIdx: this.index
+        }
+      })
+      .then(res => {
+        console.log("get graph data from backend");
+        this.chartData2.rows = res.data;
+        console.log("absolute_error: ", this.chartData2.rows[0].absolute_error);
       });
   }
 };
