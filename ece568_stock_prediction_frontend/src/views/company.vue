@@ -1,21 +1,19 @@
 <template>
   <div>
     <h1>{{company}}</h1>
-    <h4>Prediction: {{predict_price}}; Closing price: {{closing_price}}</h4>                  
-                <h3>Recommendation: {{recommend}}</h3>
-    
+    <h4>Prediction: {{predict_price}}; Closing price: {{closing_price}}</h4>
+    <h3>Recommendation: {{recommend}}</h3>
+
     <el-row type="flex" class="row-bg" justify="center" gutter="20">
       <el-col span="15">
         <el-card body-style="{ padding: '30px' }">
           <el-row>
             <h3>Stock Candle Chart</h3>
             <ve-candle :data="chartData" :settings="chartSettings"></ve-candle>
-            
           </el-row>
           <el-row>
-           <h3>True price and prediction comparison</h3>
+            <h3>True price and prediction comparison</h3>
             <ve-line :data="chartData2" :settings="chartSettings2"></ve-line>
-            
           </el-row>
         </el-card>
       </el-col>
@@ -27,12 +25,11 @@
 // @ is an alias to /src
 //import HelloWorld from '@/components/HelloWorld.vue'
 
-
 export default {
   data() {
     this.chartSettings2 = {
-      metrics: ['访问用户', '下单用户'],
-      dimension: ['日期']
+      metrics: ["访问用户", "下单用户"],
+      dimension: ["日期"]
     };
     this.chartSettings = {
       showMA: true,
@@ -46,25 +43,23 @@ export default {
       showDataZoom: true
     };
     return {
-      company: "defult company", 
-      index: -1, 
-      accuracy_percentage: -1, 
-      closing_price: -1, 
-      recommend: "Default action", 
+      company: "defult company",
+      index: -1,
+      accuracy_percentage: -1,
+      closing_price: -1,
+      recommend: "Default action",
       src: "",
-      predict_price:-1,
+      predict_price: -1,
       chartData2: {
-       
-        columns: ['日期', '访问用户', '下单用户', '下单率'],
+        columns: ["日期", "访问用户", "下单用户", "下单率"],
         rows: [
-          { '日期': '1/1', '访问用户': 1393, '下单用户': 1093, '下单率': 0.32 },
-          { '日期': '1/2', '访问用户': 3530, '下单用户': 3230, '下单率': 0.26 },
-          { '日期': '1/3', '访问用户': 2923, '下单用户': 2623, '下单率': 0.76 },
-          { '日期': '1/4', '访问用户': 1723, '下单用户': 1423, '下单率': 0.49 },
-          { '日期': '1/5', '访问用户': 3792, '下单用户': 3492, '下单率': 0.323 },
-          { '日期': '1/6', '访问用户': 4593, '下单用户': 4293, '下单率': 0.78 }
+          { 日期: "1/1", 访问用户: 1393, 下单用户: 1093, 下单率: 0.32 },
+          { 日期: "1/2", 访问用户: 3530, 下单用户: 3230, 下单率: 0.26 },
+          { 日期: "1/3", 访问用户: 2923, 下单用户: 2623, 下单率: 0.76 },
+          { 日期: "1/4", 访问用户: 1723, 下单用户: 1423, 下单率: 0.49 },
+          { 日期: "1/5", 访问用户: 3792, 下单用户: 3492, 下单率: 0.323 },
+          { 日期: "1/6", 访问用户: 4593, 下单用户: 4293, 下单率: 0.78 }
         ]
-      
       },
       chartData: {
         columns: ["日期", "open", "close", "lowest", "highest", "vol"],
@@ -377,17 +372,15 @@ export default {
       }
     };
   },
-  methods: {
-  },
+  methods: {},
   created() {
     this.company = this.$route.params.c;
     this.index = this.$route.params.i;
     this.accuracy_percentage = this.$route.params.a;
     this.closing_price = this.$route.params.p;
     this.recommend = this.$route.params.r;
-    this.src=this.$route.params.src,
-    this.predict_price=this.$route.params.predict_price
+    (this.src = this.$route.params.src),
+      (this.predict_price = this.$route.params.predict_price);
   }
-
 };
 </script>

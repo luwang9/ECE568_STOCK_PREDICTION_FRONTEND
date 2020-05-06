@@ -8,8 +8,6 @@ Vue.use(ElementUI);
 
 import VCharts from 'v-charts';
 Vue.use(VCharts);
-// import VeLine from 'v-charts/lib/candle.common'
-// Vue.component(VeLine.name, VeLine)
 
 Vue.config.productionTip = false
 
