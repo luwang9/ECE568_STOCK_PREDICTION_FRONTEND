@@ -31,8 +31,12 @@ export default {
   data() {
     this.chartSettings = {
       showVol: true,
+      showMA: true,
       legendName: {
         日K: "Price per day"
+      },
+      labelMap:{
+        MA5:'ma5'
       },
       showDataZoom: true
     }, 

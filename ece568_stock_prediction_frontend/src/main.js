@@ -19,7 +19,8 @@ Vue.config.productionTip = false
 
 Vue.prototype.$axios = axios.create({
   // baseURL: "http://172.30.229.132:8080",
-  baseURL: "http://localhost:8080",
+  //baseURL: "http://localhost:8085",
+  baseURL: "http://ece5684-env.eba-2cvvfvqd.us-east-2.elasticbeanstalk.com/"
 });
 
 new Vue({
