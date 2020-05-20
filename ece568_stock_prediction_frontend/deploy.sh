@@ -14,12 +14,9 @@ cd dist
 
 git init
 git add -A
-git commit -m 'deploy'
-
-# 部署到 https://<USERNAME>.github.io
-# git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
+git commit -m 'deploy to github pages'
 
 # 部署到 https://<USERNAME>.github.io/<REPO>
-git push -f git@github.com:bosonfields/Rutgers-Online-Stock-Prediction.git master:gh-pages
-
+git remote add origin https://github.com/luwang9/ECE568-stockforecaster-deployment.git
+git push -f origin master
 cd -
